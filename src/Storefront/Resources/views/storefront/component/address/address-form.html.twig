@@ -139,7 +139,7 @@
 
             {% block component_address_form_zipcode_city %}
                 {% set zipcodeField %}
-                {% set zipcodeValue = formViolations.getInputData()['zipcode'] ?? data.get('zipcode') %}
+                    {% set zipcodeValue = formViolations.getInputData()['zipcode'] ?? data.get('zipcode') %}
                     {% if formViolations.getViolations("/zipcode") is not empty %}
                         {% set violationPath = "/zipcode" %}
                     {% elseif formViolations.getViolations("/#{prefix}/zipcode") is not empty %}
@@ -251,7 +251,7 @@
                                    placeholder="{{ "address.additionalField1Placeholder"|trans|striptags }}"
                                    name="{{ prefix }}[additionalAddressLine1]"
                                    value="{{ data.get('additionalAddressLine1') }}"
-                                    {{ config('core.loginRegistration.additionalAddressField1Required') ? 'required="true"' }}>
+                                {{ config('core.loginRegistration.additionalAddressField1Required') ? 'required="true"' }}>
                         {% endblock %}
 
                         {% block component_address_form_additional_field1_error %}
@@ -285,7 +285,7 @@
                                    placeholder="{{ "address.additionalField2Placeholder"|trans|striptags }}"
                                    name="{{ prefix }}[additionalAddressLine2]"
                                    value="{{ data.get('additionalAddressLine2') }}"
-                                    {{ config('core.loginRegistration.additionalAddressField2Required') ? 'required="true"' }}>
+                                {{ config('core.loginRegistration.additionalAddressField2Required') ? 'required="true"' }}>
                         {% endblock %}
 
                         {% block component_address_form_additional_field2_error %}
@@ -337,15 +337,15 @@
                             {% endif %}
                             {% for country in page.countries %}
                                 <option {% if country.id == initialCountryId %}
-                                        selected="selected"
-                                        {% endif %}
-                                        value="{{ country.id }}"
-                                        data-zipcode-required="{{ country.postalCodeRequired }}"
-                                        data-vat-id-required="{{ country.vatIdRequired }}"
-                                        data-state-required="{{ country.forceStateInRegistration }}"
-                                        {% if not country.shippingAvailable and disableNonShippableCountries %}
-                                            disabled="disabled"
-                                        {% endif %}>
+                                    selected="selected"
+                                {% endif %}
+                                    value="{{ country.id }}"
+                                    data-zipcode-required="{{ country.postalCodeRequired }}"
+                                    data-vat-id-required="{{ country.vatIdRequired }}"
+                                    data-state-required="{{ country.forceStateInRegistration }}"
+                                    {% if not country.shippingAvailable and disableNonShippableCountries %}
+                                    disabled="disabled"
+                                    {% endif %}>
                                     {{ country.translated.name }}{% if showNoShippingPostfix and not country.shippingAvailable %} {{ "address.countryPostfixNoShipping"|trans|sw_sanitize }}{% endif %}
                                 </option>
                             {% endfor %}
@@ -389,9 +389,9 @@
             {% endblock %}
         </div>
 
-        <div class="row g-2">
-            {% block component_address_form_phone_number %}
-                {% if config('core.loginRegistration.showPhoneNumberField') %}
+        {% block component_address_form_phone_number %}
+            {% if config('core.loginRegistration.showPhoneNumberField') %}
+                <div class="row g-2">
                     <div class="form-group col-md-6">
                         {% if formViolations.getViolations("/phoneNumber") is not empty %}
                             {% set violationPath = "/phoneNumber" %}
@@ -422,8 +422,8 @@
                             {% endif %}
                         {% endblock %}
                     </div>
-                {% endif %}
-            {% endblock %}
-        </div>
+                </div>
+            {% endif %}
+        {% endblock %}
     {% endblock %}
 {% endblock %}
